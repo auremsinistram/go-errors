@@ -76,12 +76,32 @@ func Wrapf(err error, format string, args ...any) error {
 	}
 }
 
+func GetCode(err error) (int, bool) {
+	var e Error
+
+	if As(err, &e) {
+		if e.Code() != 0 {
+			return e.Code(), true
+		}
+	}
+
+	if e := Unwrap(err); e != nil {
+		return GetCode(e)
+	}
+
+	return 0, false
+}
+
 func Is(err error, target error) bool {
 	return stderrors.Is(err, target)
 }
 
 func As(err error, target any) bool {
 	return stderrors.As(err, target)
+}
+
+func Unwrap(err error) error {
+	return stderrors.Unwrap(err)
 }
 
 func getLocation() string {
