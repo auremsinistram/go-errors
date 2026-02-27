@@ -104,6 +104,10 @@ func Unwrap(err error) error {
 	return stderrors.Unwrap(err)
 }
 
+func Join(errs ...error) error {
+	return stderrors.Join(errs...)
+}
+
 func getLocation() string {
 	_, file, line, _ := runtime.Caller(2)
 
