@@ -1,11 +1,12 @@
 package errors
 
 import (
-	stderrors "errors"
 	"fmt"
 	"runtime"
 	"strconv"
 	"strings"
+
+	stderrors "errors"
 )
 
 type Error interface {
