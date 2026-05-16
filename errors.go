@@ -80,14 +80,16 @@ func Wrapf(err error, format string, args ...any) error {
 func GetCode(err error) (int, bool) {
 	var e Error
 
-	if As(err, &e) {
-		if e.Code() != 0 {
-			return e.Code(), true
-		}
-	}
+	for err != nil {
+		if As(err, &e) {
+			code := e.Code()
 
-	if e := Unwrap(err); e != nil {
-		return GetCode(e)
+			if code != 0 {
+				return code, true
+			}
+		}
+
+		err = Unwrap(err)
 	}
 
 	return 0, false
