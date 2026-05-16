@@ -93,6 +93,20 @@ func GetCode(err error) (int, bool) {
 	return 0, false
 }
 
+func GetRoot(err error) error {
+	for err != nil {
+		if e := Unwrap(err); e != nil {
+			err = e
+
+			continue
+		}
+
+		return err
+	}
+
+	return nil
+}
+
 func Is(err error, target error) bool {
 	return stderrors.Is(err, target)
 }
