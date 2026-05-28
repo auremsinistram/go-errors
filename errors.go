@@ -152,24 +152,28 @@ func (e *customError) Error() string {
 
 	if e.code != 0 {
 		writeSeparator()
+
 		builder.WriteString("code: ")
 		builder.WriteString(strconv.Itoa(e.code))
 	}
 
 	if e.location != "" {
 		writeSeparator()
+
 		builder.WriteString("location: ")
 		builder.WriteString(e.location)
 	}
 
 	if e.description != "" {
 		writeSeparator()
+
 		builder.WriteString("description: ")
 		builder.WriteString(e.description)
 	}
 
 	if e.wrapped != nil {
 		writeSeparator()
+
 		builder.WriteString("wrapped: ")
 		builder.WriteString(e.wrapped.Error())
 	}
