@@ -143,6 +143,8 @@ func (e *customError) Error() string {
 	writeSeparator := func() {
 		if !first {
 			builder.WriteString(", ")
+
+			return
 		}
 
 		first = false
