@@ -32,14 +32,14 @@ type customError struct {
 func New(code int, format string, args ...any) error {
 	return &customError{
 		code:        code,
-		location:    getLocation(),
+		location:    location(),
 		description: fmt.Sprintf(format, args...),
 	}
 }
 
 func Errorf(format string, args ...any) error {
 	return &customError{
-		location:    getLocation(),
+		location:    location(),
 		description: fmt.Sprintf(format, args...),
 	}
 }
@@ -47,7 +47,7 @@ func Errorf(format string, args ...any) error {
 func Mark(err error, code int) error {
 	return &customError{
 		code:     code,
-		location: getLocation(),
+		location: location(),
 		wrapped:  err,
 	}
 }
@@ -55,7 +55,7 @@ func Mark(err error, code int) error {
 func Markf(err error, code int, format string, args ...any) error {
 	return &customError{
 		code:        code,
-		location:    getLocation(),
+		location:    location(),
 		description: fmt.Sprintf(format, args...),
 		wrapped:     err,
 	}
@@ -63,7 +63,7 @@ func Markf(err error, code int, format string, args ...any) error {
 
 func Wrap(err error, description string) error {
 	return &customError{
-		location:    getLocation(),
+		location:    location(),
 		description: description,
 		wrapped:     err,
 	}
@@ -71,13 +71,13 @@ func Wrap(err error, description string) error {
 
 func Wrapf(err error, format string, args ...any) error {
 	return &customError{
-		location:    getLocation(),
+		location:    location(),
 		description: fmt.Sprintf(format, args...),
 		wrapped:     err,
 	}
 }
 
-func GetCode(err error) (int, bool) {
+func Code(err error) (int, bool) {
 	var e Error
 
 	for err != nil {
@@ -95,7 +95,7 @@ func GetCode(err error) (int, bool) {
 	return 0, false
 }
 
-func GetRoot(err error) error {
+func Root(err error) error {
 	for err != nil {
 		if e := Unwrap(err); e != nil {
 			err = e
@@ -125,7 +125,7 @@ func Join(errs ...error) error {
 	return stderrors.Join(errs...)
 }
 
-func getLocation() string {
+func location() string {
 	_, file, line, _ := runtime.Caller(2)
 
 	return fmt.Sprintf(
