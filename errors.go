@@ -29,11 +29,10 @@ type customError struct {
 	wrapped error
 }
 
-func New(code int, format string, args ...any) error {
+func New(description string) error {
 	return &customError{
-		code:        code,
 		location:    location(),
-		description: fmt.Sprintf(format, args...),
+		description: description,
 	}
 }
 
