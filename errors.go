@@ -36,6 +36,22 @@ func New(description string) error {
 	}
 }
 
+func NewWithCode(code int, description string) error {
+	return &customError{
+		code:        code,
+		location:    location(),
+		description: description,
+	}
+}
+
+func NewWithCodef(code int, format string, args ...any) error {
+	return &customError{
+		code:        code,
+		location:    location(),
+		description: fmt.Sprintf(format, args...),
+	}
+}
+
 func Errorf(format string, args ...any) error {
 	return &customError{
 		location:    location(),
