@@ -143,11 +143,7 @@ func Join(errs ...error) error {
 func location() string {
 	_, file, line, _ := runtime.Caller(2)
 
-	return fmt.Sprintf(
-		"%s:%d",
-		file,
-		line,
-	)
+	return file + ":" + strconv.Itoa(line)
 }
 
 func (e *customError) Error() string {
