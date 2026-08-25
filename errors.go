@@ -141,9 +141,11 @@ func Join(errs ...error) error {
 }
 
 func location() string {
-	_, file, line, _ := runtime.Caller(2)
+	if _, file, line, ok := runtime.Caller(2); ok {
+		return file + ":" + strconv.Itoa(line)
+	}
 
-	return file + ":" + strconv.Itoa(line)
+	return ""
 }
 
 func (e *customError) Error() string {
